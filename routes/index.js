@@ -18,6 +18,7 @@ router.post('/webhook/', function (req, res) {
   const events = req.body.entry[0].messaging;
   for (i = 0; i < events.length; i++) {
     const event = req.body.entry[0].messaging[i];
+    const sender = event.sender.id;
     if (event.message && event.message.text) {
       const text = event.message.text;
       console.log(text)
@@ -49,20 +50,6 @@ function sendTextMessage(sender, text) {
   });
 }
 
-/* webhook */
-router.post('/webhook', function (req, res) {
-  console.log('webhook!')
-  const events = req.body.entry[0].messaging;
-  for (i = 0; i < events.length; i++) {
-    const event = req.body.entry[0].messaging[i];
-    const sender = event.sender.id;
-    if (event.message && event.message.text) {
-      const text = event.message.text;
-      console.log(text)
-      sendTextMessage(sender, "Text received, echo: " + text);
-    }
-  }
-  res.sendStatus(200);
-});
+
 
 module.exports = router;
